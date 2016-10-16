@@ -3,6 +3,7 @@ const router = express.Router();
 const crypto = require('crypto');
 const querystring = require('querystring');
 const url = require('url')
+const bodyParser = require('body-parser')
 
 
 const TOKEN = 'weixin'
@@ -18,9 +19,6 @@ router.get('/', function(req, res, next) {
   let token = TOKEN
 
   let tmpArr = [token,timestamp,nonce].sort();
-  console.log("+>:",tmpArr)
-  console.log("+>:",[token,timestamp,nonce].sort())
-  console.log("+>:",[token,timestamp,nonce])
 
 
   var shasum = crypto.createHash('sha1');
@@ -36,5 +34,9 @@ router.get('/', function(req, res, next) {
 
 
 });
+
+router.post('/',function(req,res){
+  console.log("+>:",req.body)
+})
 
 module.exports = router;
