@@ -25,7 +25,6 @@ router.get('/', function(req, res, next) {
   shasum.update(tmpArr.join());
   var result = shasum.digest('hex');
 
-  console.log("==>:",result,signature)
   if(result == signature){
     res.send(echostr)
   }else{
@@ -36,7 +35,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/',function(req,res){
-  console.log("+>:",req.body)
+  console.log("++++>:",req.body)
 })
 
 module.exports = router;
