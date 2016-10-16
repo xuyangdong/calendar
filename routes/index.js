@@ -18,6 +18,9 @@ router.get('/', function(req, res, next) {
   let token = TOKEN
 
   let tmpArr = [token,timestamp,nonce].sort();
+  console.log("+>:",tmpArr)
+  console.log("+>:",[token,timestamp,nonce].sort())
+  console.log("+>:",[token,timestamp,nonce])
 
 
   var shasum = crypto.createHash('sha1');
@@ -28,7 +31,7 @@ router.get('/', function(req, res, next) {
   if(result == signature){
     res.send(echostr)
   }else{
-    res.send("error")
+    res.send(echostr)
   }
 
 
