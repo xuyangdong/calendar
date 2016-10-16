@@ -17,12 +17,15 @@ router.get('/', function(req, res, next) {
   let echostr = queryObject.echostr
   let token = TOKEN
 
-
   let tmpArr = [token,timestamp,nonce].sort();
 
-  let cryptoUtils = crypto.createHash('sha1')
-  let cipher = cryptoUtils.update(tmpArr.join(),'utf8','hex')
-  if(cipher == signature){
+
+  var shasum = crypto.createHash('sha1');
+  shasum.update(tmpArr.join());
+  var result = shasum.digest('hex');
+
+  console.log("==>:",result,signature)
+  if(result == signature){
     res.send(echostr)
   }else{
     res.send("error")
