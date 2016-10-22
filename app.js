@@ -8,7 +8,8 @@ var xmlBodyParser = require('./middleware/xmlBodyParser')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var verify = require('./routes/verify');
+var verification = require('./routes/verify');
+var handleWeChatMsg = require('./routes/wechathandler')
 
 
 var app = express();
@@ -28,7 +29,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.get('/',verify)
+app.get('/',verification);
+app.post('/',handleWeChatMsg)
 app.use('/users', users);
 
 // catch 404 and forward to error handler

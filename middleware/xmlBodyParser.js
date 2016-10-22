@@ -9,7 +9,7 @@ function xmlBodyParser(){
         return
       }else{
         console.log(result)
-        req.body = result
+        req.body = result.xml
         next()
         return
       }
