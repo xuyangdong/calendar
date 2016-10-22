@@ -1,6 +1,6 @@
 var expect = require('chai').expect
 var request = require('request')
-
+var xml2js = require('xml2js')
 
 const baseUrl = 'http://localhost:3000/'
 const testUrl = `${baseUrl}?signature=44f73fe623b6c4dc62b5a7659fe34936f72048b7&echostr=6665636326900649451&timestamp=1477070056&nonce=1608825561`
@@ -31,9 +31,12 @@ describe('微信消息测试',function(){
       },
       body:testMsg
     },function(e,r,b){
-      let info = JSON.parse(b)
-      expect(info.ToUserName[0]).to.be.equal('xuyangdong')
-      done()
+      const parser = xml2js.Parser()
+      parser.parseString(b,function(err,result){
+        console.log(result)
+        expect(result.xml.ToUserName[0]).to.be.equal('xuyangdong')
+        done()
+      })
     })
   })
 })
