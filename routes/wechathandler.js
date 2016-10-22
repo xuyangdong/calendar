@@ -16,11 +16,10 @@ function wechathandler(){
   return function(req,res){
     console.log('收到xml请求')
     let respData = buildXmlMsg(req.body)
+    console.log("-->:",respData)
     res.set({
       'Content-Type':'text/xml'
     })
-
-
     res.send(respData)
   }
 }
