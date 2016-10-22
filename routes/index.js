@@ -9,7 +9,7 @@ const TOKEN = 'weixin'
 
 /* GET home page. */
 router.use('/',function(req,res,next){
-  console.log("a request has coming")
+  console.log("a request has coming",req.get('content-type'),req.body)
   next()
 })
 

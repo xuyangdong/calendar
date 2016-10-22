@@ -8,7 +8,6 @@ function xmlBodyParser(){
         next(err)
         return
       }else{
-        console.log(result)
         req.body = result.xml
         next()
         return
