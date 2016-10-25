@@ -9,7 +9,7 @@ const testMsg = `<xml>
  <FromUserName><![CDATA[fromUser]]></FromUserName>
  <CreateTime>1348831860</CreateTime>
  <MsgType><![CDATA[text]]></MsgType>
- <Content><![CDATA[this is a test]]></Content>
+ <Content>今天上午3:10,我要哇哈哈</Content>
  <MsgId>1234567890123456</MsgId>
  </xml>`
 
@@ -31,10 +31,31 @@ describe('微信消息测试',function(){
       },
       body:testMsg
     },function(e,r,b){
+      console.log(b)
       const parser = xml2js.Parser()
       parser.parseString(b,function(err,result){
         console.log(result)
         expect(result.xml.ToUserName[0]).to.be.equal('xuyangdong')
+        done()
+      })
+    })
+  })
+})
+
+describe('添加时间事件',function(){
+  it('请求的响应,Content应该2016/10/26 上午1:13:15',function(done){
+    request.post({
+      url:baseUrl,
+      headers:{
+        'content-type':'text/xml'
+      },
+      body:testMsg
+    },function(e,r,b){
+      console.log(b)
+      const parser = xml2js.Parser()
+      parser.parseString(b,function(err,result){
+        console.log(result)
+        expect(result.xml.Content[0]).to.be.equal('2016/10/26 上午3:10:00')
         done()
       })
     })
