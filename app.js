@@ -8,7 +8,13 @@ var xmlBodyParser = require('./middleware/xmlBodyParser')
 var mongo = require('mongodb')
 var monk = require('monk')
 var db = monk('mongodb://root:OlfuhOUkqG7f2TEhdLz3VZYNR0pOIV0lblDbnZ3W@zaxkciwwkspl.mongodb.sae.sina.com.cn:10224,hpmwuytdvlsv.mongodb.sae.sina.com.cn:10224/calenderapp')
+// var db = monk('localhost:27017/calenderapp')
 
+db.then(result => {
+  console.log("result:",result)
+}).catch( err => {
+  console.log("err:",err)
+})
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var verification = require('./routes/verify');
