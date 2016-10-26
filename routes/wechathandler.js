@@ -21,7 +21,7 @@ function wechathandler(){
   ];
 
   return function(req,res){
-    console.log('收到xml请求')
+    console.log('------------收到xml请求,-------------')
 
     let respData;
     const type = req.body.MsgType[0]
@@ -36,8 +36,8 @@ function wechathandler(){
           let result;
           // console.log("~~~>:1",ruleDate[0].exec(elements[0]))
           // console.log("~~~>:2",ruleDate[1].exec(elements[0]))
-          console.log("-->",elements)
           if((result = ruleDate[0].exec(elements[0]))){
+            console.log("--------------1",result,"1-------------")
             result = result.slice(1,7),map(item => {
               if((~~item)){
                 return parseInt(item)
@@ -55,6 +55,7 @@ function wechathandler(){
               date = new Date(elements[0],elements[1],elements[2],elements[4],element[5],0)
             }
           }else if((result = ruleDate[1].exec(elements[0]))){
+            console.log("--------------2",result,"2-------------")
             result = result.slice(1,5).map(item => {
               if((~~item)){
                 return parseInt(item)
@@ -76,13 +77,12 @@ function wechathandler(){
             }
           }
           let calenders = req.db.get('calenders')
-          console.log("0----->:",date.toString(),date.getTime())
           calenders.insert({
             name:req.body.FromUserName,
             date:date.getTime(),
             event:elements[1]
           }).then( result => {
-
+            console.log("------------success--------------")
             respData = buildXmlMsg(req.body,`东哥记住了，你在${date.toString()},有件事：${elements[1]}`)
             ruleDate[0].exec('')
             ruleDate[1].exec('')
@@ -92,7 +92,7 @@ function wechathandler(){
             })
             res.send(respData)
           }).catch( err => {
-
+            console.log("------------erro--------------")
             respData = buildXmlMsg(req.body,"嗨呀，我没记住")
             ruleDate[0].exec('')
             ruleDate[1].exec('')

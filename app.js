@@ -11,7 +11,7 @@ var db = monk('mongodb://root:OlfuhOUkqG7f2TEhdLz3VZYNR0pOIV0lblDbnZ3W@hpmwuytdv
 // var db = monk('localhost:27017/calenderapp')
 
 db.then(result => {
-  console.log("result:",result)
+  console.log("result:连接成功")
 }).catch( err => {
   console.log("err:",err)
 })
