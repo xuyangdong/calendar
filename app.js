@@ -5,6 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var xmlBodyParser = require('./middleware/xmlBodyParser')
+var mongo = require('mongodb')
+var monk = require('monk')
+var db = monk('mongodb://root:OlfuhOUkqG7f2TEhdLz3VZYNR0pOIV0lblDbnZ3W@zaxkciwwkspl.mongodb.sae.sina.com.cn:10224,hpmwuytdvlsv.mongodb.sae.sina.com.cn:10224')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -28,6 +31,10 @@ app.use(xmlBodyParser())
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/',function(req,res,next){
+  req.db = db;
+  next();
+})
 app.use('/', routes);
 app.get('/',verification);
 app.post('/',handleWeChatMsg)
