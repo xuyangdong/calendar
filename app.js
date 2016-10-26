@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var xmlBodyParser = require('./middleware/xmlBodyParser')
 var mongo = require('mongodb')
 var monk = require('monk')
-var db = monk('mongodb://root:OlfuhOUkqG7f2TEhdLz3VZYNR0pOIV0lblDbnZ3W@zaxkciwwkspl.mongodb.sae.sina.com.cn:10224,hpmwuytdvlsv.mongodb.sae.sina.com.cn:10224')
+var db = monk('mongodb://root:OlfuhOUkqG7f2TEhdLz3VZYNR0pOIV0lblDbnZ3W@zaxkciwwkspl.mongodb.sae.sina.com.cn:10224,hpmwuytdvlsv.mongodb.sae.sina.com.cn:10224/calenderapp')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
