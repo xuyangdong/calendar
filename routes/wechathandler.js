@@ -29,7 +29,7 @@ function wechathandler(){
     switch(type){
       case 'text':{
         //处理发回来的文本
-        let elements = content.split(',')
+        let elements = content.split('，')
         console.log("------------------------------->:",elements)
         if(elements.length > 1 && elements[1] != ''){
           //获取日期数据
