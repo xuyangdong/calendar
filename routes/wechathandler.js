@@ -81,7 +81,6 @@ function wechathandler(){
             respData = buildXmlMsg(req.body,`东哥记住了，你在${date.toString()},有件事：${elements[1]}`)
             ruleDate[0].exec('')
             ruleDate[1].exec('')
-            console.log("添加成功",result,respData)
             res.set({
               'Content-Type':'text/xml'
             })
@@ -100,11 +99,10 @@ function wechathandler(){
 
         }else{
           let calenders = req.db.get('calenders')
-          calenders.find({name:req.body.FromUserName[0]}).then((doc)=>{
-            console.log("++++++++++++++++++++++",doc[0].name,parseInt(doc[0].date))
+          calenders.find({}).then((doc)=>{
             let result = doc.filter(item => {
-              let time = parseInt(doc.date)
-              return time > Date.now()
+              let time = parseInt(item.date)
+              return (item.name == req.body.FromUserName[0])&&(time > Date.now())
             })
             console.log("---------------------",result)
             if(result.length > 0){
@@ -117,8 +115,9 @@ function wechathandler(){
               'Content-Type':'text/xml'
             })
             res.send(respData)
+          }).catch( err =>{
+            console.log("-->",err)
           })
-
         }
         break;
       }
