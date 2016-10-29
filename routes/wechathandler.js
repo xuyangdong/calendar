@@ -33,8 +33,6 @@ function wechathandler(){
           //获取日期数据
           let date;
           let result;
-          // console.log("~~~>:1",ruleDate[0].exec(elements[0]))
-          // console.log("~~~>:2",ruleDate[1].exec(elements[0]))
           if((result = ruleDate[0].exec(elements[0]))){
             result = result.slice(1,7),map(item => {
               if((~~item)){
@@ -100,12 +98,30 @@ function wechathandler(){
           })
 
         }else{
-          respData = buildXmlMsg(req.body,'傻了吧，我的蒙，你写错了')
+          let calenders = req.db.get('calenders')
+          calenders.find({name:req.body.FromUserName[0]}).then((doc)=>{
+            console.log("-----------------------------",doc)
+            respData = buildXmlMsg(req.body,doc)
+            ruleDate[0].exec('')
+            ruleDate[1].exec('')
+            res.set({
+              'Content-Type':'text/xml'
+            })
+            res.send(respData)
+          })
+
         }
         break;
       }
       default :{
         respData = buildXmlMsg(req.body)
+        ruleDate[0].exec('')
+        ruleDate[1].exec('')
+        console.log("添加失败",err,respData)
+        res.set({
+          'Content-Type':'text/xml'
+        })
+        res.send(respData)
       }
     }
 
