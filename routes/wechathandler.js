@@ -73,7 +73,7 @@ function wechathandler(){
           }
           let calenders = req.db.get('calenders')
           calenders.insert({
-            name:req.body.FromUserName,
+            name:req.body.FromUserName[0],
             date:date.getTime(),
             event:elements[1]
           }).then( result => {
@@ -100,12 +100,18 @@ function wechathandler(){
         }else{
           let calenders = req.db.get('calenders')
           calenders.find({name:req.body.FromUserName[0]}).then((doc)=>{
-            console.log("-----------------------------",doc)
+            console.log("++++++++++++++++++++++",doc[0].name,parseInt(doc[0].date))
             let result = doc.filter(item => {
               let time = parseInt(doc.date)
-              return time > Date.new()
+              return time > Date.now()
             })
-            respData = buildXmlMsg(req.body,result.map(item => item.event))
+            console.log("---------------------",result)
+            if(result.length > 0){
+              respData = buildXmlMsg(req.body,result.map(item => item.event))
+            }else{
+              respData = buildXmlMsg(req.body,'事件队列为空')
+            }
+
             res.set({
               'Content-Type':'text/xml'
             })
