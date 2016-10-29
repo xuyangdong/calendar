@@ -16,8 +16,8 @@ function buildXmlMsg(obj,content){
 
 function wechathandler(){
   const ruleDate = [
-    /([1-9][0-9]{0,3})年([1-9][0-9])月([1-9][0-9])[日|号](上午|下午)*([1-9][0-9]{0,1})[:|：]([0-9][0-9]*)/g,//2016年12月20日上午3点10分
-    /(今天|明天)(上午|下午)*([1-9][0-9]{0,1})[:|：]([0-9][0-9]*)/g
+    /(?:([1-9][0-9]{0,3})年)?(?:([1-9][0-9]*)月)?(?:([1-9][0-9]*)[日|号])?(上午|下午)*([1-9][0-9]{0,1})[:|：]([0-9][0-9]*)/,//2016年12月20日上午3点10分
+    /(今天|明天)(上午|下午)*([1-9][0-9]{0,1})[:|：]([0-9][0-9]*)/,
   ];
 
   return function(req,res){
@@ -101,9 +101,11 @@ function wechathandler(){
           let calenders = req.db.get('calenders')
           calenders.find({name:req.body.FromUserName[0]}).then((doc)=>{
             console.log("-----------------------------",doc)
-            respData = buildXmlMsg(req.body,doc)
-            ruleDate[0].exec('')
-            ruleDate[1].exec('')
+            let result = doc.filter(item => {
+              let time = parseInt(doc.date)
+              return time > Date.new()
+            })
+            respData = buildXmlMsg(req.body,result.map(item => item.event))
             res.set({
               'Content-Type':'text/xml'
             })
@@ -114,6 +116,7 @@ function wechathandler(){
         break;
       }
       default :{
+        //非文字信息
         respData = buildXmlMsg(req.body)
         ruleDate[0].exec('')
         ruleDate[1].exec('')
