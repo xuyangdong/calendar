@@ -16,7 +16,7 @@ function buildXmlMsg(obj,content){
 
 function wechathandler(){
   const ruleDate = [
-    /(?:([1-9][0-9]{0,3})年)?(?:([1-9][0-9]*)月)?(?:([1-9][0-9]*)[日|号])?(上午|下午)*([1-9][0-9]{0,1})[:|：]([0-9][0-9]*)/,//2016年12月20日上午3点10分
+    /(?:([1-9][0-9]{0,3})年)?([1-9][0-9]*)月([1-9][0-9]*)[日|号](上午|下午)*([1-9][0-9]{0,1})[:|：]([0-9][0-9]*)/,//2016年12月20日上午3点10分
     /(今天|明天)(上午|下午)*([1-9][0-9]{0,1})[:|：]([0-9][0-9]*)/,
   ];
 
@@ -34,7 +34,8 @@ function wechathandler(){
           let date;
           let result;
           if((result = ruleDate[0].exec(elements[0]))){
-            result = result.slice(1,7),map(item => {
+            console.log("37:",result)
+            result = result.slice(1,7).map(item => {
               if((~~item)){
                 return parseInt(item)
               }else{
