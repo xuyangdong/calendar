@@ -99,7 +99,7 @@ function wechathandler(){
 
         }else{
           let calenders = req.db.get('calenders')
-          calenders.find({}).then((doc)=>{
+          calenders.find({name:req.body.FromUserName[0]}).then((doc)=>{
             console.log("-----------------------------",doc)
             respData = buildXmlMsg(req.body,doc)
             ruleDate[0].exec('')
