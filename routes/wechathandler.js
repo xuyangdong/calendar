@@ -78,7 +78,7 @@ function wechathandler(){
             date:date.getTime(),
             event:elements[1]
           }).then( result => {
-            respData = buildXmlMsg(req.body,`东哥记住了，你在${date.toString()},有件事要做6：${elements[1]}`)
+            respData = buildXmlMsg(req.body,`东哥记住了，你在${date.toString()},有件事要做7：${elements[1]}`)
             ruleDate[0].exec('')
             ruleDate[1].exec('')
             res.set({
