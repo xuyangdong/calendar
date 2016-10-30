@@ -12,6 +12,7 @@ var db = monk('localhost:27017/calenderapp')
 
 db.then(result => {
   console.log("result:连接成功")
+  console.log("自动部署成功")
 }).catch( err => {
   console.log("err:",err)
 })
